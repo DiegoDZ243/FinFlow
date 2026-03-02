@@ -2,6 +2,10 @@
 
 # dependencies
 /node_modules
+/back/node_modules
+/back/.env
+/back/package-lock.json
+/back/package.json
 /.pnp
 .pnp.js
 
@@ -34,3 +38,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+

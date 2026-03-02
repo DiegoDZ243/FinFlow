@@ -1,0 +1,40 @@
+const {DataTypes} = require('sequelize'); 
+
+const sequelize = require('../config/db'); 
+
+const MetaFinanciera=sequelize.define("metasFinancieras",{
+    clave:{
+        type: DataTypes.UUID, 
+        defaultValue: DataTypes.UUIDV4,// Genera automáticamente el UUID v4
+        primaryKey: true
+    },
+    identificador:{
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate:{
+            len:[4,15]
+        }
+    },
+    fechaInicio:{
+        type:DataTypes.DATE,
+        allowNull:false
+    },
+    fechaLimite:{
+        type:DataTypes.DATE,
+        allowNull:false
+    },
+    descripcion:{
+        type: DataTypes.TEXT,
+        allowNull:true
+    },
+    estado:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
+    }
+},
+{
+    tableName:'metasFinancieras',
+    timestamps:false
+});
+
+module.exports=MetaFinanciera; 
