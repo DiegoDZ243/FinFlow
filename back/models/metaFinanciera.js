@@ -5,7 +5,7 @@ const sequelize = require('../config/db');
 const MetaFinanciera=sequelize.define("metasFinancieras",{
     clave:{
         type: DataTypes.UUID, 
-        defaultValue: DataTypes.UUIDV4,// Genera automáticamente el UUID v4
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true
     },
     identificador:{
