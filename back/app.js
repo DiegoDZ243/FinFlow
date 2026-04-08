@@ -1,18 +1,26 @@
-// Importar Express
+require('dotenv').config();
 const express = require('express');
+const { sequelize } = require('./models');
 
-// Inicializar la aplicación Express
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Definir el puerto para el servidor
-const PORT = 3000;
+app.use(express.json());
 
-// Ruta principal
 app.get('/', (req, res) => {
     res.send('¡Código base del backend de FinFlow!');
 });
 
-// Iniciar el servidor
+const {registrarAhorrador} = require('./routes/AhorradoresInteligentes/registrar');
+const {loginAhorrador} = require('./routes/AhorradoresInteligentes/login');
+
+app.use('/api/ahorradores', registrarAhorrador);
+app.use('/api/ahorradores', loginAhorrador);
+
+sequelize.sync()
+    .then(() => console.log('Tablas sincronizadas correctamente'))
+    .catch(err => console.error('Error al sincronizar:', err));
+
 app.listen(PORT, () => {
     console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });

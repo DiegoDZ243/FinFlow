@@ -1,3 +1,4 @@
+const sequelize = require('../config/db');
 const Ahorrador = require('./ahorradorInteligente');
 const Ingreso = require('./ingreso'); 
 const Egreso = require('./egreso'); 
@@ -11,3 +12,5 @@ Ahorrador.hasMany(Meta);
 Ingreso.belongsTo(Ahorrador); 
 Egreso.belongsTo(Ahorrador); 
 Meta.belongsTo(Ahorrador); 
+
+module.exports = { sequelize, models: { Ahorrador, Ingreso, Egreso, Meta } }; 

@@ -18,6 +18,13 @@ const ahorradorInteligente=sequelize.define('ahorradoresInteligentes',{
         },
         allowNull:false
     },
+    password:{
+        type: DataTypes.STRING,
+        validate:{
+            len:[4,100]
+        },
+        allowNull:false
+    },
     fechaRegistro:{
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW

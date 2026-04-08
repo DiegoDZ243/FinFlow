@@ -219,29 +219,29 @@
 ## EQUIPO BACKEND
 
 ### Fase 1: Setup y Configuración
-- [ ] **B-01**: Configurar .env + variables entorno  
+- [x] **B-01**: Configurar .env + variables entorno  
   *Asignado a*: Tech Lead  
   *Depende de*: -  
   *Story Points*: 1
 
 ### Fase 2: Modelo Usuario
-- [ ] **B-02**: Crear modelo Usuario (email, password, rol)  
+- [x] **B-02**: Crear modelo Usuario (email, password, rol)  
   *Asignado a*: Dev Backend 2  
   *Depende de*: B-01  
   *Story Points*: 2
 
 ### Fase 3: Autenticación
-- [ ] **B-03**: Endpoint POST /auth/register  
+- [x] **B-03**: Endpoint POST /api/ahorradores/registrar  
   *Asignado a*: Dev Backend 1  
   *Depende de*: B-02  
   *Story Points*: 2
 
-- [ ] **B-04**: Endpoint POST /auth/login (JWT)  
+- [x] **B-04**: Endpoint POST /api/ahorradores/login (JWT)  
   *Asignado a*: Dev Backend 1  
   *Depende de*: B-03  
   *Story Points*: 3
 
-- [ ] **B-05**: Middleware JWT auth  
+- [x] **B-05**: Middleware JWT auth  
   *Asignado a*: Dev Backend 1  
   *Depende de*: B-04  
   *Story Points*: 2
@@ -301,35 +301,35 @@
 
 ---
 
-**Progreso Backend**: 0/15 tareas completadas
+**Progreso Backend**: 5/15 tareas completadas
 
 ---
 
 ## EQUIPO FRONTEND
 
 ### Fase 1: Setup
-- [ ] **F-01**: Setup React + carpetas MVVM  
+- [x] **F-01**: Setup React + carpetas MVVM  
   *Asignado a*: Tech Lead  
   *Depende de*: -  
   *Story Points*: 2
 
-- [ ] **F-02**: Configurar Axios + base URL  
+- [x] **F-02**: Configurar Axios + base URL  
   *Asignado a*: Tech Lead  
   *Depende de*: F-01  
   *Story Points*: 1
 
 ### Fase 2: Autenticación
-- [ ] **F-03**: AuthContext (login/logout)  
+- [x] **F-03**: AuthContext (login/logout)  
   *Asignado a*: Dev Frontend 2  
   *Depende de*: F-02 + B-04, B-05  
   *Story Points*: 3
 
-- [ ] **F-04**: authService.js  
+- [x] **F-04**: ahorradorService.js  
   *Asignado a*: Dev Frontend 2  
   *Depende de*: F-03  
   *Story Points*: 2
 
-- [ ] **F-05**: LoginView  
+- [x] **F-05**: LoginView  
   *Asignado a*: Dev Frontend 1  
   *Depende de*: F-04  
   *Story Points*: 3
@@ -379,7 +379,7 @@
 
 ---
 
-**Progreso Frontend**: 0/13 tareas completadas
+**Progreso Frontend**: 5/13 tareas completadas
 
 ---
 
@@ -414,5 +414,6 @@
 
 | Fecha | Actualización | Por |
 |-------|---------------|-----|
-| DD/MM/YYYY | Creación del documento | - |
+| 07/04/2026 | Setup Completo: B-01, B-02, F-01, F-02 | opencode |
+| 07/04/2026 | Auth Funcional: B-03, B-04, B-05, F-03, F-04, F-05 | opencode |
 | | | |
