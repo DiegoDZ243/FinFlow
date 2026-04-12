@@ -23,6 +23,20 @@ const MetaFinanciera=sequelize.define("metasFinancieras",{
         type:DataTypes.DATE,
         allowNull:false
     },
+    montoObjetivo:{
+        type: DataTypes.DECIMAL(12, 2),
+        allowNull: false,
+        validate: {
+            min: 1
+        }
+    },
+    montoAlcanzado:{
+        type: DataTypes.DECIMAL(12, 2),
+        defaultValue: 0.00,
+        validate: {
+            min: 0
+        }
+    },
     descripcion:{
         type: DataTypes.TEXT,
         allowNull:true

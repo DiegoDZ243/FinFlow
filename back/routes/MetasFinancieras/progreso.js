@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { eliminarMeta } = require('../../controllers/metaController');
+const { obtenerProgreso } = require('../../controllers/metaController');
 const { verificarToken } = require('../../middleware/auth');
 
-router.delete('/:id', verificarToken, eliminarMeta);
+router.get('/:id/progreso', verificarToken, obtenerProgreso);
 
 module.exports = router;

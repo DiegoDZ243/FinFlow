@@ -247,38 +247,38 @@
   *Story Points*: 2
 
 ### Fase 4: Modelo Metas
-- [ ] **B-06**: Completar modelo MetaFinanciera (montoObjetivo, montoAlcanzado)  
+- [x] **B-06**: Completar modelo MetaFinanciera (montoObjetivo, montoAlcanzado)  
   *Asignado a*: Dev Backend 2  
   *Depende de*: B-01  
   *Story Points*: 2
 
-- [ ] **B-07**: Modelo PlanDeAhorro  
+- [x] **B-07**: Modelo PlanDeAhorro  
   *Asignado a*: Dev Backend 2  
   *Depende de*: B-06  
   *Story Points*: 2
 
 ### Fase 5: CRUD Metas
-- [ ] **B-08**: CRUD /api/metas (create, getAll, getById)  
+- [x] **B-08**: CRUD /api/metas (create, getAll, getById)  
   *Asignado a*: Dev Backend 1  
   *Depende de*: B-06  
   *Story Points*: 3
 
-- [ ] **B-09**: PUT /api/metas/:id  
+- [x] **B-09**: PUT /api/metas/:id  
   *Asignado a*: Dev Backend 1  
   *Depende de*: B-08  
   *Story Points*: 2
 
-- [ ] **B-10**: DELETE /api/metas/:id  
+- [x] **B-10**: DELETE /api/metas/:id  
   *Asignado a*: Dev Backend 1  
   *Depende de*: B-08  
   *Story Points*: 1
 
-- [ ] **B-11**: GET /api/metas/:id/progreso  
+- [x] **B-11**: GET /api/metas/:id/progreso  
   *Asignado a*: Dev Backend 1  
   *Depende de*: B-08  
   *Story Points*: 2
 
-- [ ] **B-12**: POST /api/metas/:id/aportar  
+- [x] **B-12**: POST /api/metas/:id/aportar  
   *Asignado a*: Dev Backend 1  
   *Depende de*: B-08  
   *Story Points*: 3
@@ -301,7 +301,7 @@
 
 ---
 
-**Progreso Backend**: 5/15 tareas completadas
+**Progreso Backend**: 12/15 tareas completadas
 
 ---
 
@@ -398,7 +398,7 @@
 |------|-------------|-------------------|
 | 🎯 **Setup Completo** | Infraestructura lista | B-01, B-02, F-01, F-02 |
 | 🔐 **Auth Funcional** | Login/registro funcionando | B-03, B-04, B-05, F-03, F-04, F-05 |
-| 💰 **Metas Backend** | API de metas completa | B-06 a B-12 |
+| 💰 **Metas Backend** | API de metas completa | B-06 a B-12 | ✅ Completado |
 | 📱 **Metas Frontend** | UI de metas completa | F-06 a F-12 |
 | ✅ **Sprint Completo** | Todo funcional y testeado | B-13, B-14, B-15, F-13 |
 
@@ -416,4 +416,5 @@
 |-------|---------------|-----|
 | 07/04/2026 | Setup Completo: B-01, B-02, F-01, F-02 | opencode |
 | 07/04/2026 | Auth Funcional: B-03, B-04, B-05, F-03, F-04, F-05 | opencode |
+| 12/04/2026 | Metas Backend: B-06 a B-12 | opencode |
 | | | |
