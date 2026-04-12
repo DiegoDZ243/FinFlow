@@ -13,8 +13,7 @@ app.get('/', (req, res) => {
     res.send('¡Código base del backend de FinFlow!');
 });
 
-const {registrarAhorrador} = require('./routes/AhorradoresInteligentes/registrar');
-const {loginAhorrador} = require('./routes/AhorradoresInteligentes/login');
+const authRouter = require('./routes/AhorradoresInteligentes');
 const crearMetaRouter = require('./routes/MetasFinancieras/create');
 const obtenerTodasMetasRouter = require('./routes/MetasFinancieras/getAll');
 const obtenerMetaPorIdRouter = require('./routes/MetasFinancieras/getById');
@@ -23,8 +22,7 @@ const eliminarMetaRouter = require('./routes/MetasFinancieras/delete');
 const progresoRouter = require('./routes/MetasFinancieras/progreso');
 const aportarRouter = require('./routes/MetasFinancieras/aportar');
 
-app.use('/api/ahorradores', registrarAhorrador);
-app.use('/api/ahorradores', loginAhorrador);
+app.use('/api/ahorradores', authRouter);
 app.use('/api/metas', crearMetaRouter);
 app.use('/api/metas', obtenerTodasMetasRouter);
 app.use('/api/metas', obtenerMetaPorIdRouter);
