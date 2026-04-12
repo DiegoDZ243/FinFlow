@@ -334,39 +334,39 @@
   *Depende de*: F-04  
   *Story Points*: 3
 
-- [ ] **F-06**: Navbar + Layout base  
+- [x] **F-06**: Navbar + Layout base  
   *Asignado a*: Dev Frontend 1  
   *Depende de*: F-05  
   *Story Points*: 2
 
 ### Fase 3: Servicio y Context de Metas
-- [ ] **F-07**: metaService.js  
+- [x] **F-07**: metaService.js  
   *Asignado a*: Dev Frontend 2  
   *Depende de*: F-02 + B-08  
   *Story Points*: 2
 
-- [ ] **F-08**: MetaContext  
+- [x] **F-08**: MetaContext  
   *Asignado a*: Dev Frontend 2  
   *Depende de*: F-07  
   *Story Points*: 2
 
 ### Fase 4: Vistas de Metas
-- [ ] **F-09**: ListaMetasView + CardMeta  
+- [x] **F-09**: ListaMetasView + CardMeta  
   *Asignado a*: Dev Frontend 1  
   *Depende de*: F-08  
   *Story Points*: 5
 
-- [ ] **F-10**: CrearMetaView (formulario)  
+- [x] **F-10**: CrearMetaView (formulario)  
   *Asignado a*: Dev Frontend 1  
   *Depende de*: F-09  
   *Story Points*: 5
 
-- [ ] **F-11**: DetalleMetaView  
+- [x] **F-11**: DetalleMetaView  
   *Asignado a*: Dev Frontend 1  
   *Depende de*: F-09  
   *Story Points*: 4
 
-- [ ] **F-12**: BarraProgreso component  
+- [x] **F-12**: BarraProgreso component  
   *Asignado a*: Dev Frontend 1  
   *Depende de*: F-09  
   *Story Points*: 2
@@ -379,7 +379,7 @@
 
 ---
 
-**Progreso Frontend**: 5/13 tareas completadas
+**Progreso Frontend**: 11/13 tareas completadas
 
 ---
 
@@ -417,4 +417,5 @@
 | 07/04/2026 | Setup Completo: B-01, B-02, F-01, F-02 | opencode |
 | 07/04/2026 | Auth Funcional: B-03, B-04, B-05, F-03, F-04, F-05 | opencode |
 | 12/04/2026 | Metas Backend: B-06 a B-12 | opencode |
+| 12/04/2026 | Metas Frontend: F-06 a F-12 | opencode |
 | | | |
