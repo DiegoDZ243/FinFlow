@@ -14,22 +14,10 @@ app.get('/', (req, res) => {
 });
 
 const authRouter = require('./routes/AhorradoresInteligentes');
-const crearMetaRouter = require('./routes/MetasFinancieras/create');
-const obtenerTodasMetasRouter = require('./routes/MetasFinancieras/getAll');
-const obtenerMetaPorIdRouter = require('./routes/MetasFinancieras/getById');
-const actualizarMetaRouter = require('./routes/MetasFinancieras/update');
-const eliminarMetaRouter = require('./routes/MetasFinancieras/delete');
-const progresoRouter = require('./routes/MetasFinancieras/progreso');
-const aportarRouter = require('./routes/MetasFinancieras/aportar');
+const metasRouter = require('./routes/MetasFinancieras');
 
 app.use('/api/ahorradores', authRouter);
-app.use('/api/metas', crearMetaRouter);
-app.use('/api/metas', obtenerTodasMetasRouter);
-app.use('/api/metas', obtenerMetaPorIdRouter);
-app.use('/api/metas', actualizarMetaRouter);
-app.use('/api/metas', eliminarMetaRouter);
-app.use('/api/metas', progresoRouter);
-app.use('/api/metas', aportarRouter);
+app.use('/api/metas', metasRouter);
 
 sequelize.sync()
     .then(() => console.log('Tablas sincronizadas correctamente'))
