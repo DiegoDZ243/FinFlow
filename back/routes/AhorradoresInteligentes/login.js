@@ -10,9 +10,9 @@ const loginAhorrador = async (req, res) => {
             return res.status(400).json({ error: 'Email y password son requeridos' });
         }
 
-        const { ahorradorInteligente } = models;
+        const { Ahorrador } = models;
 
-        const ahorrador = await ahorradorInteligente.findOne({ where: { email } });
+        const ahorrador = await Ahorrador.findOne({ where: { email } });
         if (!ahorrador) {
             return res.status(401).json({ error: 'Credenciales inválidas' });
         }

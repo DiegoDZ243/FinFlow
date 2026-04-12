@@ -10,16 +10,16 @@ const registrarAhorrador = async (req, res) => {
             return res.status(400).json({ error: 'Email y password son requeridos' });
         }
 
-        const { ahorradorInteligente } = models;
+        const { Ahorrador } = models;
 
-        const existente = await ahorradorInteligente.findOne({ where: { email } });
+        const existente = await Ahorrador.findOne({ where: { email } });
         if (existente) {
             return res.status(409).json({ error: 'El email ya está registrado' });
         }
 
         const passwordHash = await bcrypt.hash(password, 10);
 
-        const nuevoAhorrador = await ahorradorInteligente.create({
+        const nuevoAhorrador = await Ahorrador.create({
             email,
             password: passwordHash
         });
