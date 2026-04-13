@@ -3,7 +3,8 @@ const { Meta, PlanDeAhorro, Ahorrador } = models;
 
 const crearMeta = async (req, res) => {
     try {
-        const { identificador, montoObjetivo, montoAlcanzado, fechaInicio, fechaLimite, descripcion, ahorradorId } = req.body;
+        const { identificador, montoObjetivo, montoAlcanzado, fechaInicio, fechaLimite, descripcion } = req.body;
+        const ahorradorId = req.user.id;
 
         if (!identificador || !montoObjetivo || !fechaInicio || !fechaLimite) {
             return res.status(400).json({ error: 'Todos los campos requeridos deben ser proporcionados' });
@@ -28,7 +29,8 @@ const crearMeta = async (req, res) => {
 
 const obtenerTodasMetas = async (req, res) => {
     try {
-        const metas = await Meta.findAll();
+        const ahorradorId = req.user.id;
+        const metas = await Meta.findAll({ where: { ahorradorId } });
         res.json(metas);
     } catch (error) {
         console.error('Error al obtener metas:', error);
@@ -39,10 +41,15 @@ const obtenerTodasMetas = async (req, res) => {
 const obtenerMetaPorId = async (req, res) => {
     try {
         const { id } = req.params;
+        const ahorradorId = req.user.id;
         const meta = await Meta.findByPk(id);
 
         if (!meta) {
             return res.status(404).json({ error: 'Meta no encontrada' });
+        }
+
+        if (meta.ahorradorId !== ahorradorId) {
+            return res.status(403).json({ error: 'No tiene permiso para acceder a esta meta' });
         }
 
         res.json(meta);
@@ -55,12 +62,17 @@ const obtenerMetaPorId = async (req, res) => {
 const actualizarMeta = async (req, res) => {
     try {
         const { id } = req.params;
+        const ahorradorId = req.user.id;
         const { identificador, montoObjetivo, montoAlcanzado, fechaInicio, fechaLimite, descripcion, estado } = req.body;
 
         const meta = await Meta.findByPk(id);
 
         if (!meta) {
             return res.status(404).json({ error: 'Meta no encontrada' });
+        }
+
+        if (meta.ahorradorId !== ahorradorId) {
+            return res.status(403).json({ error: 'No tiene permiso para actualizar esta meta' });
         }
 
         await meta.update({
@@ -83,11 +95,16 @@ const actualizarMeta = async (req, res) => {
 const eliminarMeta = async (req, res) => {
     try {
         const { id } = req.params;
+        const ahorradorId = req.user.id;
 
         const meta = await Meta.findByPk(id);
 
         if (!meta) {
             return res.status(404).json({ error: 'Meta no encontrada' });
+        }
+
+        if (meta.ahorradorId !== ahorradorId) {
+            return res.status(403).json({ error: 'No tiene permiso para eliminar esta meta' });
         }
 
         await meta.destroy();
@@ -102,11 +119,16 @@ const eliminarMeta = async (req, res) => {
 const obtenerProgreso = async (req, res) => {
     try {
         const { id } = req.params;
+        const ahorradorId = req.user.id;
 
         const meta = await Meta.findByPk(id);
 
         if (!meta) {
             return res.status(404).json({ error: 'Meta no encontrada' });
+        }
+
+        if (meta.ahorradorId !== ahorradorId) {
+            return res.status(403).json({ error: 'No tiene permiso para acceder a esta meta' });
         }
 
         const progreso = parseFloat(meta.montoAlcanzado);
@@ -129,6 +151,7 @@ const obtenerProgreso = async (req, res) => {
 const aportarMeta = async (req, res) => {
     try {
         const { id } = req.params;
+        const ahorradorId = req.user.id;
         const { monto } = req.body;
 
         if (!monto || monto <= 0) {
@@ -139,6 +162,10 @@ const aportarMeta = async (req, res) => {
 
         if (!meta) {
             return res.status(404).json({ error: 'Meta no encontrada' });
+        }
+
+        if (meta.ahorradorId !== ahorradorId) {
+            return res.status(403).json({ error: 'No tiene permiso para aportar a esta meta' });
         }
 
         const nuevoMonto = parseFloat(meta.montoAlcanzado) + parseFloat(monto);

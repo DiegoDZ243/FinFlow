@@ -44,6 +44,14 @@ const MetaFinanciera=sequelize.define("metasFinancieras",{
     estado:{
         type: DataTypes.BOOLEAN,
         defaultValue: true
+    },
+    ahorradorId:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'ahorradoresInteligentes',
+            key: 'clave'
+        }
     }
 },
 {

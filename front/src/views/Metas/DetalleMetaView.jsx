@@ -112,31 +112,23 @@ const DetalleMetaView = () => {
                     </div>
                     {progreso && (
                         <div className="info-row">
-                            <span>Días restantes:</span>
-                            <span>{progreso.progreso.diasRestantes} días</span>
+                            <span>Progreso:</span>
+                            <span>{progreso.porcentaje}%</span>
                         </div>
                     )}
                 </div>
 
                 {progreso && (
                     <div className="detalle-estadisticas">
-                        <h3>Estadísticas</h3>
+                        <h3>Progreso</h3>
                         <div className="stats-grid">
                             <div className="stat-item">
-                                <span className="stat-num">{progreso.estadisticas.totalAportaciones}</span>
-                                <span className="stat-desc">Total aportaciones</span>
+                                <span className="stat-num">{progreso.porcentaje}%</span>
+                                <span className="stat-desc">Completado</span>
                             </div>
                             <div className="stat-item">
-                                <span className="stat-num">{progreso.estadisticas.aportacionesMensuales}</span>
-                                <span className="stat-desc">Mensuales</span>
-                            </div>
-                            <div className="stat-item">
-                                <span className="stat-num">{progreso.estadisticas.aportacionesExtras}</span>
-                                <span className="stat-desc">Extraordinarias</span>
-                            </div>
-                            <div className="stat-item">
-                                <span className="stat-num">${progreso.estadisticas.promedioAportacion}</span>
-                                <span className="stat-desc">Promedio</span>
+                                <span className="stat-num">{formatCurrency(progreso.faltan)}</span>
+                                <span className="stat-desc">Falta</span>
                             </div>
                         </div>
                     </div>

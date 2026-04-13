@@ -34,6 +34,14 @@ const PlanDeAhorro=sequelize.define("planesDeAhorro",{
     estado:{
         type: DataTypes.BOOLEAN,
         defaultValue: true
+    },
+    ahorradorId:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'ahorradoresInteligentes',
+            key: 'clave'
+        }
     }
 },
 {

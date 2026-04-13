@@ -417,5 +417,5 @@
 | 07/04/2026 | Setup Completo: B-01, B-02, F-01, F-02 | opencode |
 | 07/04/2026 | Auth Funcional: B-03, B-04, B-05, F-03, F-04, F-05 | opencode |
 | 12/04/2026 | Metas Backend: B-06 a B-12 | opencode |
-| 12/04/2026 | Metas Frontend: F-06 a F-12 | opencode |
+| 12/04/2026 | Metas Frontend: F-06 a F-12 Completado + Branch: feature/metas-frontend | opencode |
 | | | |

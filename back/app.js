@@ -19,7 +19,7 @@ const metasRouter = require('./routes/MetasFinancieras');
 app.use('/api/ahorradores', authRouter);
 app.use('/api/metas', metasRouter);
 
-sequelize.sync()
+sequelize.sync({ force: false })
     .then(() => console.log('Tablas sincronizadas correctamente'))
     .catch(err => console.error('Error al sincronizar:', err));
 

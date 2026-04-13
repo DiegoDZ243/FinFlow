@@ -19,8 +19,15 @@ const Egreso = sequelize.define('egresos',{
     descripcion:{
         type: DataTypes.TEXT,
         allowNull:true
+    },
+    ahorradorId:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'ahorradoresInteligentes',
+            key: 'clave'
+        }
     }
-    //Revisar la relación de categorias con el ahorrador inteligente y egresos/ingresos
 },
 {
     tableName:'egresos',
