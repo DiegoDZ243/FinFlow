@@ -15,9 +15,11 @@ app.get('/', (req, res) => {
 
 const authRouter = require('./routes/AhorradoresInteligentes');
 const metasRouter = require('./routes/MetasFinancieras');
+const aportesMetasRouter = require('./routes/AportesMetas');
 
 app.use('/api/ahorradores', authRouter);
 app.use('/api/metas', metasRouter);
+app.use('/api/aportes-metas', aportesMetasRouter);
 
 sequelize.sync({ force: false })
     .then(() => console.log('Tablas sincronizadas correctamente'))

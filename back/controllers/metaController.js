@@ -1,5 +1,6 @@
-const { models } = require('../models');
-const { Meta, PlanDeAhorro, Ahorrador } = models;
+const { models, sequelize } = require('../models');
+const { ensureLegacyMontoMigrated, recalcularMontoAlcanzado } = require('../services/metaMontoSync');
+const { Meta, PlanDeAhorro, Ahorrador, AporteMeta } = models;
 
 const crearMeta = async (req, res) => {
     try {
@@ -149,30 +150,50 @@ const obtenerProgreso = async (req, res) => {
 };
 
 const aportarMeta = async (req, res) => {
+    const t = await sequelize.transaction();
     try {
         const { id } = req.params;
         const ahorradorId = req.user.id;
-        const { monto } = req.body;
+        const { monto, tipoAporte, tipo } = req.body;
 
         if (!monto || monto <= 0) {
+            await t.rollback();
             return res.status(400).json({ error: 'Monto debe ser mayor a 0' });
         }
 
-        const meta = await Meta.findByPk(id);
+        const meta = await Meta.findByPk(id, { transaction: t });
 
         if (!meta) {
+            await t.rollback();
             return res.status(404).json({ error: 'Meta no encontrada' });
         }
 
         if (meta.ahorradorId !== ahorradorId) {
+            await t.rollback();
             return res.status(403).json({ error: 'No tiene permiso para aportar a esta meta' });
         }
 
-        const nuevoMonto = parseFloat(meta.montoAlcanzado) + parseFloat(monto);
-        await meta.update({ montoAlcanzado: nuevoMonto });
+        await ensureLegacyMontoMigrated(meta, { transaction: t });
+
+        // Mantener compatibilidad con el endpoint existente: crea un AporteMeta y luego
+        // recalcula montoAlcanzado desde el historial.
+        await AporteMeta.create(
+            {
+                metaClave: id,
+                cantidad: monto,
+                tipoAporte: tipoAporte || tipo || 'unico',
+                fechaAporte: new Date()
+            },
+            { transaction: t }
+        );
+
+        const nuevoMontoStr = await recalcularMontoAlcanzado(id, { transaction: t });
+        const nuevoMonto = parseFloat(nuevoMontoStr);
 
         const progreso = parseFloat(meta.montoObjetivo);
         const porcentaje = progreso > 0 ? (nuevoMonto / progreso) * 100 : 0;
+
+        await t.commit();
 
         res.json({
             message: 'Aporte realizado correctamente',
@@ -185,6 +206,7 @@ const aportarMeta = async (req, res) => {
         });
     } catch (error) {
         console.error('Error al aportar:', error);
+        await t.rollback();
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 };
