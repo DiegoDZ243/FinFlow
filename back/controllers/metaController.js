@@ -173,10 +173,18 @@ const aportarMeta = async (req, res) => {
             return res.status(403).json({ error: 'No tiene permiso para aportar a esta meta' });
         }
 
+        //NUEVA VALIDACIÓN
+        const faltante = meta.montoObjetivo - meta.montoAlcanzado;
+        
+        if (monto > faltante) {
+            await t.rollback();
+            return res.status(400).json({ 
+                error: `El aporte excede el objetivo. Solo te faltan ${faltante} pesos para completar esta meta.` 
+            });
+        }
+
         await ensureLegacyMontoMigrated(meta, { transaction: t });
 
-        // Mantener compatibilidad con el endpoint existente: crea un AporteMeta y luego
-        // recalcula montoAlcanzado desde el historial.
         await AporteMeta.create(
             {
                 metaClave: id,
