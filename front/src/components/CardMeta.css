@@ -86,13 +86,22 @@
     transition: background-color 0.2s;
 }
 
+.card-meta-acciones button {
+    flex: 1;
+    text-align: center;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
 .btn-ver {
     background-color: #16c79a;
     color: #0f0f1a;
 }
 
 .btn-ver:hover {
-    background-color: #20d39a;
+    color: #3a3a5a;
 }
 
 .btn-editar {

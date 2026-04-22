@@ -115,7 +115,7 @@ const EditarMetaView = () => {
                 </div>
 
                 <div className="form-group checkbox-group">
-                    <label>
+                   {/* <label>
                         <input
                             type="checkbox"
                             name="estado"
@@ -123,7 +123,7 @@ const EditarMetaView = () => {
                             onChange={handleChange}
                         />
                         Meta activa
-                    </label>
+                    </label> */}
                 </div>
 
                 {error && <div className="form-error">{error}</div>}
