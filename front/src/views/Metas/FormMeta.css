@@ -121,3 +121,42 @@
     width: auto;
     margin: 0;
 }
+
+/* Input fecha */
+.form-group {
+    position: relative;
+}
+
+.form-group input[type="date"] {
+    color: #ffffff;
+    padding-right: 3rem;
+}
+
+/* dd/mm/aaaa gris */
+.form-group input[type="date"]::-webkit-datetime-edit {
+    color: #555;
+}
+
+/* Cuando ya tiene fecha */
+.form-group input[type="date"]:valid::-webkit-datetime-edit {
+    color: #ffffff;
+}
+
+/* Oculta icono nativo */
+.form-group input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Icono personalizado */
+.form-group:has(input[type="date"])::after {
+    content: "📅";
+    position: absolute;
+    right: 14px;
+    top: 43px;
+    font-size: 1.1rem;
+    pointer-events: none;
+}

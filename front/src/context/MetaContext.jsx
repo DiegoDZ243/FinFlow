@@ -128,7 +128,14 @@ export const MetaProvider = ({ children }) => {
             await fetchMetaPorId(id);
             return resultado;
         } catch (err) {
-            setError(err.response?.data?.error || 'Error al aportar');
+            // 1. Extraemos el mensaje de error del backend, o ponemos el tuyo por defecto
+            const mensajeError = err.response?.data?.error || 'No se puede exceder a la cantidad de meta total';
+            
+            // 2. Lanzamos la alerta nativa del navegador (igual a la de tu imagen)
+            window.alert(mensajeError);
+            
+            // 3. Guardamos el error en el estado por si acaso
+            setError(mensajeError);
             return null;
         } finally {
             setLoading(false);

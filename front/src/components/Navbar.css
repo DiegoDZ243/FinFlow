@@ -41,7 +41,33 @@
 .navbar-user {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 15px;
+}
+
+.navbar-avatar-link {
+    text-decoration: none;
+}
+
+.navbar-avatar {
+    width: 38px;
+    height: 38px;
+    /* Usamos el mismo degradado de tu perfil principal */
+    background: linear-gradient(135deg, #00ffcc, #0099ff);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #0f0f1a; /* Color oscuro para que la letra resalte */
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
 }
 
 .user-email {

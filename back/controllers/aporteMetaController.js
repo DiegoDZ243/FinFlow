@@ -25,6 +25,20 @@ const crearAporteMeta = async (req, res) => {
             return res.status(403).json({ error: 'No tiene permiso para aportar a esta meta' });
         }
 
+        // --- NUEVA VALIDACIÓN DE EXCESO ---
+        const objetivo = parseFloat(meta.montoObjetivo);
+        const actual = parseFloat(meta.montoAlcanzado);
+        const faltante = objetivo - actual;
+
+        if (parseFloat(cantidad) > faltante) {
+            await t.rollback();
+            return res.status(400).json({ 
+                error: "No se puede exceder a la cantidad de meta total",
+                faltante: faltante 
+            });
+        }
+        // ----------------------------------
+
         await ensureLegacyMontoMigrated(meta, { transaction: t });
 
         const nuevoAporte = await AporteMeta.create(
@@ -47,7 +61,6 @@ const crearAporteMeta = async (req, res) => {
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
 };
-
 const actualizarAporteMeta = async (req, res) => {
     const t = await sequelize.transaction();
     try {

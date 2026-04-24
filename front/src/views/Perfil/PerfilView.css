@@ -1,0 +1,61 @@
+.perfil-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.perfil-card {
+    background-color: #1a1a2e; /* Fondo oscuro similar a tu UI */
+    border-radius: 12px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    border: 1px solid #2e2e4a;
+}
+
+.perfil-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.perfil-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #00ffcc, #0099ff);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #0f0f1a;
+    margin: 0 auto 15px;
+}
+
+.perfil-body .info-group {
+    margin-bottom: 20px;
+}
+
+.perfil-body label {
+    display: block;
+    color: #8888a0;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.perfil-body p {
+    color: #eaeaea;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.status-badge {
+    background-color: rgba(0, 255, 204, 0.1);
+    color: #00ffcc;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}

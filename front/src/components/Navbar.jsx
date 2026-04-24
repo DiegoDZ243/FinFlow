@@ -38,6 +38,14 @@ const Navbar = () => {
 
                 <div className="navbar-user">
                     <span className="user-email">{user?.email}</span>
+                    
+                    {/* Avatar circular con la inicial del usuario */}
+                    <Link to="/perfil" className="navbar-avatar-link">
+                        <div className="navbar-avatar">
+                            {user?.email?.charAt(0).toUpperCase() || 'U'}
+                        </div>
+                    </Link>
+
                     <button onClick={handleLogout} className="btn-logout">
                         Cerrar Sesión
                     </button>
