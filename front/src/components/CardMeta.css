@@ -1,0 +1,106 @@
+.card-meta {
+    background-color: #1a1a2e;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #2a2a4a;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-meta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.card-meta.completada {
+    border-color: #16c79a;
+}
+
+.card-meta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.card-meta-nombre {
+    margin: 0;
+    color: #eaeaea;
+    font-size: 1.25rem;
+}
+
+.badge-completada {
+    background-color: #16c79a;
+    color: #0f0f1a;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.card-meta-descripcion {
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.card-meta-progreso {
+    margin-bottom: 1rem;
+}
+
+.card-meta-info {
+    margin-bottom: 1rem;
+}
+
+.card-meta-fecha {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+
+.card-meta-fecha .label {
+    color: #666;
+}
+
+.card-meta-fecha .valor {
+    color: #eaeaea;
+}
+
+.card-meta-fecha .valor.vencida {
+    color: #e94560;
+}
+
+.card-meta-acciones {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.card-meta-acciones a {
+    flex: 1;
+    text-align: center;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.btn-ver {
+    background-color: #16c79a;
+    color: #0f0f1a;
+}
+
+.btn-ver:hover {
+    color: #3a3a5a;
+}
+
+.btn-editar {
+    background-color: #2a2a4a;
+    color: #eaeaea;
+    border: 1px solid #3a3a5a;
+}
+
+.btn-editar:hover {
+    background-color: #3a3a5a;
+}
