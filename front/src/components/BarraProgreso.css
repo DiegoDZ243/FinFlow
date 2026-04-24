@@ -1,0 +1,46 @@
+.barra-progreso-container {
+    width: 100%;
+}
+
+.progreso-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.progreso-texto {
+    color: #eaeaea;
+    font-size: 0.9rem;
+}
+
+.progreso-porcentaje {
+    color: #16c79a;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.progreso-barra {
+    width: 100%;
+    height: 12px;
+    background-color: #2a2a4a;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.progreso-fill {
+    height: 100%;
+    transition: width 0.5s ease-out;
+    border-radius: 6px;
+}
+
+.progreso-verde {
+    background: linear-gradient(90deg, #16c79a, #20d39a);
+}
+
+.progreso-amarillo {
+    background: linear-gradient(90deg, #f0a500, #f5b800);
+}
+
+.progreso-rojo {
+    background: linear-gradient(90deg, #e94560, #ff5a75);
+}
