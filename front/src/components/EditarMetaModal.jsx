@@ -63,7 +63,7 @@ const EditarMetaModal = ({ open, meta, onClose, onSaved }) => {
                             value={formData.identificador}
                             onChange={handleChange}
                             minLength={4}
-                            maxLength={15}
+                            maxLength={30}
                             disabled={loading}
                         />
                     </label>
