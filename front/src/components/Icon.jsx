@@ -54,6 +54,13 @@ const Icon = ({ name, className = '' }) => {
                     <path d="M16 16l5 5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                 </svg>
             );
+        case 'income':
+            return (
+                <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+                    <path d="M3 17l6-6 4 4 8-8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M15 7h6v6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+            );
         default:
             return null;
     }

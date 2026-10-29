@@ -108,7 +108,7 @@ const RegistroIngreso = () => {
 				{success && <div className="form-success" role="status">{success}</div>}
 
 				<div className="form-actions">
-					<button type="button" className="btn-cancelar" onClick={() => navigate('/metas')}>
+					<button type="button" className="btn-cancelar" onClick={() => navigate('/ingresos')}>
 						Cancelar
 					</button>
 					<button type="submit" className="btn-enviar" disabled={loading}>
