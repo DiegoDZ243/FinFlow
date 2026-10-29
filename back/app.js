@@ -23,10 +23,12 @@ app.get('/', (req, res) => {
 const authRouter = require('./routes/AhorradoresInteligentes');
 const metasRouter = require('./routes/MetasFinancieras');
 const aportesMetasRouter = require('./routes/AportesMetas');
+const ingresosRouter = require('./routes/Ingresos');
 
 app.use('/api/ahorradores', authRouter);
 app.use('/api/metas', metasRouter);
 app.use('/api/aportes-metas', aportesMetasRouter);
+app.use('/api/ingresos', ingresosRouter);
 
 if (require.main === module) {
     sequelize.sync({ force: false })

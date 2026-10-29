@@ -54,7 +54,7 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/ingresos" className="navbar-link">
+                        <Link to="/ingresos/nuevo" className="navbar-link">
                             Ingresos
                         </Link>
                     </li>
