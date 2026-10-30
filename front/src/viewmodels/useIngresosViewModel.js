@@ -1,10 +1,11 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import { obtenerIngresos } from '../services/ingresoService';
+import { eliminarIngreso as eliminarIngresoApi, obtenerIngresos } from '../services/ingresoService';
 import { calcularTotalIngresos, filtrarIngresos } from './ingresosHelpers';
 
 export const useIngresosViewModel = () => {
     const [ingresos, setIngresos] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [eliminandoId, setEliminandoId] = useState(null);
     const [error, setError] = useState(null);
     const [busqueda, setBusqueda] = useState('');
     const [fechaDesde, setFechaDesde] = useState('');
@@ -46,6 +47,21 @@ export const useIngresosViewModel = () => {
         setFechaHasta('');
     }, []);
 
+    const eliminarIngreso = useCallback(async (id) => {
+        setEliminandoId(id);
+        setError(null);
+        try {
+            await eliminarIngresoApi(id);
+            setIngresos((actuales) => actuales.filter((ingreso) => ingreso.clave !== id));
+            return true;
+        } catch (err) {
+            setError(err.response?.data?.error || 'Error al eliminar el ingreso');
+            return false;
+        } finally {
+            setEliminandoId(null);
+        }
+    }, []);
+
     return {
         ingresos,
         ingresosFiltrados,
@@ -59,8 +75,10 @@ export const useIngresosViewModel = () => {
         setFechaDesde,
         fechaHasta,
         setFechaHasta,
+        eliminandoId,
         hayFiltrosActivos,
         limpiarFiltros,
+        eliminarIngreso,
         fetchIngresos
     };
 };

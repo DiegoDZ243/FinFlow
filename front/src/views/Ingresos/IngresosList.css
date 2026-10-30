@@ -354,6 +354,27 @@
     white-space: nowrap;
 }
 
+.btn-eliminar-ingreso {
+    background: rgba(233, 69, 96, 0.14);
+    color: #ff8294;
+    border: 1px solid rgba(233, 69, 96, 0.35);
+    padding: 0.65rem 0.9rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-eliminar-ingreso:hover:not(:disabled) {
+    background: rgba(233, 69, 96, 0.24);
+    border-color: rgba(233, 69, 96, 0.6);
+}
+
+.btn-eliminar-ingreso:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
 @media (max-width: 900px) {
     .ingresos-filtros {
         grid-template-columns: 1fr 1fr;
@@ -383,6 +404,10 @@
     }
 
     .ingreso-monto {
+        align-self: flex-end;
+    }
+
+    .btn-eliminar-ingreso {
         align-self: flex-end;
     }
 }

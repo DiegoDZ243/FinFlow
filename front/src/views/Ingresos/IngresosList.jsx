@@ -38,10 +38,19 @@ const IngresosList = () => {
         setFechaDesde,
         fechaHasta,
         setFechaHasta,
+        eliminandoId,
         hayFiltrosActivos,
         limpiarFiltros,
+        eliminarIngreso,
         fetchIngresos
     } = useIngresosViewModel();
+
+    const handleEliminar = async (ingreso) => {
+        const confirmado = window.confirm('¿Estás seguro de eliminar este ingreso?');
+        if (confirmado) {
+            await eliminarIngreso(ingreso.clave);
+        }
+    };
 
     if (loading && ingresos.length === 0) {
         return (
@@ -212,6 +221,15 @@ const IngresosList = () => {
                                 <div className="ingreso-monto">
                                     +{formatCurrency(ingreso.monto)}
                                 </div>
+                                <button
+                                    type="button"
+                                    className="btn-eliminar-ingreso"
+                                    onClick={() => handleEliminar(ingreso)}
+                                    disabled={eliminandoId === ingreso.clave}
+                                    aria-label={`Eliminar ingreso ${ingreso.descripcion || ingreso.clave}`}
+                                >
+                                    {eliminandoId === ingreso.clave ? 'Eliminando...' : 'Eliminar'}
+                                </button>
                             </article>
                         );
                     })}
