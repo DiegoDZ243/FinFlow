@@ -6,6 +6,7 @@ jest.mock('../../models', () => ({
             create: jest.fn(),
             findAll: jest.fn(),
             findByPk: jest.fn(),
+            destroy: jest.fn(),
         },
     },
 }));
@@ -14,6 +15,7 @@ const {
     crearIngreso,
     obtenerIngresos,
     obtenerIngresoPorId,
+    eliminarIngreso,
 } = require('../../controllers/ingresoController');
 const { models } = require('../../models');
 
@@ -240,6 +242,86 @@ describe('obtenerIngresoPorId', () => {
         models.Ingreso.findByPk.mockRejectedValue(new Error('Error BD'));
 
         await obtenerIngresoPorId(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.json).toHaveBeenCalledWith({ error: 'Error interno del servidor' });
+    });
+});
+
+describe('eliminarIngreso', () => {
+    test('elimina el ingreso del usuario autenticado y devuelve 200', async () => {
+        const req = { params: { id: '5' }, user: { id: 17 } };
+        const res = makeRes();
+        const ingreso = {
+            clave: 5,
+            ahorradorId: 17,
+            destroy: jest.fn().mockResolvedValue(undefined),
+        };
+        models.Ingreso.findByPk.mockResolvedValue(ingreso);
+
+        await eliminarIngreso(req, res);
+
+        expect(models.Ingreso.findByPk).toHaveBeenCalledWith(5);
+        expect(ingreso.destroy).toHaveBeenCalled();
+        expect(res.json).toHaveBeenCalledWith({ message: 'Ingreso eliminado correctamente' });
+    });
+
+    test.each(['abc', '0', '-3'])('devuelve 400 si el id es inválido: %s', async (id) => {
+        const req = { params: { id }, user: { id: 17 } };
+        const res = makeRes();
+
+        await eliminarIngreso(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(models.Ingreso.findByPk).not.toHaveBeenCalled();
+    });
+
+    test('devuelve 404 si el ingreso no existe', async () => {
+        const req = { params: { id: '5' }, user: { id: 17 } };
+        const res = makeRes();
+        models.Ingreso.findByPk.mockResolvedValue(null);
+
+        await eliminarIngreso(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.json).toHaveBeenCalledWith({ error: 'Ingreso no encontrado' });
+    });
+
+    test('devuelve 403 si el ingreso pertenece a otro usuario', async () => {
+        const req = { params: { id: '5' }, user: { id: 17 } };
+        const res = makeRes();
+        const ingreso = { ahorradorId: 99, destroy: jest.fn() };
+        models.Ingreso.findByPk.mockResolvedValue(ingreso);
+
+        await eliminarIngreso(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(403);
+        expect(res.json).toHaveBeenCalledWith({
+            error: 'No tiene permiso para eliminar este ingreso',
+        });
+        expect(ingreso.destroy).not.toHaveBeenCalled();
+    });
+
+    test('devuelve 500 si ocurre un error al consultar el ingreso', async () => {
+        const req = { params: { id: '5' }, user: { id: 17 } };
+        const res = makeRes();
+        models.Ingreso.findByPk.mockRejectedValue(new Error('Error BD'));
+
+        await eliminarIngreso(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.json).toHaveBeenCalledWith({ error: 'Error interno del servidor' });
+    });
+
+    test('devuelve 500 si falla el borrado', async () => {
+        const req = { params: { id: '5' }, user: { id: 17 } };
+        const res = makeRes();
+        models.Ingreso.findByPk.mockResolvedValue({
+            ahorradorId: 17,
+            destroy: jest.fn().mockRejectedValue(new Error('Error BD')),
+        });
+
+        await eliminarIngreso(req, res);
 
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ error: 'Error interno del servidor' });

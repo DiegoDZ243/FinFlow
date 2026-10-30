@@ -9,6 +9,7 @@ jest.mock('../../models', () => ({
             findAll: jest.fn(),
             findByPk: jest.fn(),
             create: jest.fn(),
+            destroy: jest.fn(),
         },
         Ahorrador: {},
         Egreso: {},
@@ -35,6 +36,13 @@ describe('Rutas /api/ingresos', () => {
 
         expect(res.status).toBe(401);
         expect(models.Ingreso.findAll).not.toHaveBeenCalled();
+    });
+
+    test('DELETE /api/ingresos/:id rechaza peticiones sin token con 401', async () => {
+        const res = await request(app).delete('/api/ingresos/3');
+
+        expect(res.status).toBe(401);
+        expect(models.Ingreso.findByPk).not.toHaveBeenCalled();
     });
 
     test('GET /api/ingresos devuelve 200 con la lista de ingresos del usuario', async () => {
@@ -65,5 +73,22 @@ describe('Rutas /api/ingresos', () => {
 
         expect(res.status).toBe(200);
         expect(res.body).toEqual(ingreso);
+    });
+
+    test('DELETE /api/ingresos/:id elimina el ingreso con un token válido', async () => {
+        const ingreso = {
+            clave: 3,
+            ahorradorId: 17,
+            destroy: jest.fn().mockResolvedValue(undefined),
+        };
+        models.Ingreso.findByPk.mockResolvedValue(ingreso);
+
+        const res = await request(app)
+            .delete('/api/ingresos/3')
+            .set('Authorization', 'Bearer ' + generarToken());
+
+        expect(res.status).toBe(200);
+        expect(res.body).toEqual({ message: 'Ingreso eliminado correctamente' });
+        expect(ingreso.destroy).toHaveBeenCalled();
     });
 });

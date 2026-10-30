@@ -23,3 +23,8 @@ export const crearIngreso = async (data) => {
 	const response = await api.post('/ingresos', data, config());
 	return response.data;
 };
+
+export const eliminarIngreso = async (id) => {
+	const response = await api.delete(`/ingresos/${id}`, config());
+	return response.data;
+};

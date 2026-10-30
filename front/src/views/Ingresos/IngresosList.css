@@ -354,6 +354,180 @@
     white-space: nowrap;
 }
 
+.btn-eliminar-ingreso {
+    background: rgba(233, 69, 96, 0.14);
+    color: #ff8294;
+    border: 1px solid rgba(233, 69, 96, 0.35);
+    padding: 0.65rem 0.9rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-eliminar-ingreso:hover:not(:disabled) {
+    background: rgba(233, 69, 96, 0.24);
+    border-color: rgba(233, 69, 96, 0.6);
+}
+
+.btn-eliminar-ingreso:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.confirmacion-ingreso-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(5, 7, 18, 0.78);
+    backdrop-filter: blur(6px);
+}
+
+.confirmacion-ingreso-modal {
+    width: min(440px, 100%);
+    padding: 2rem;
+    color: #eaeaea;
+    text-align: center;
+    background: linear-gradient(180deg, #1a1a2e, #121426);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 22px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+    animation: confirmacion-ingreso-entrada 0.18s ease-out;
+}
+
+.confirmacion-ingreso-icono {
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: #ff8294;
+    background: rgba(233, 69, 96, 0.14);
+    border: 1px solid rgba(233, 69, 96, 0.28);
+    border-radius: 18px;
+}
+
+.confirmacion-ingreso-icono svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.confirmacion-ingreso-modal h2 {
+    margin: 0 0 0.6rem;
+    font-size: 1.35rem;
+}
+
+.confirmacion-ingreso-modal > p {
+    margin: 0 auto 1.25rem;
+    color: #a3accf;
+    line-height: 1.5;
+}
+
+.confirmacion-ingreso-detalle {
+    display: grid;
+    gap: 0.3rem;
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+}
+
+.confirmacion-ingreso-nombre {
+    overflow-wrap: anywhere;
+    color: #eaeaea;
+    font-weight: 600;
+}
+
+.confirmacion-ingreso-monto {
+    color: #16c79a;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.confirmacion-ingreso-fecha {
+    color: #8b95b3;
+    font-size: 0.88rem;
+}
+
+.confirmacion-ingreso-error {
+    margin-bottom: 1rem;
+    padding: 0.7rem 0.8rem;
+    color: #ff8294;
+    text-align: left;
+    background: rgba(233, 69, 96, 0.12);
+    border: 1px solid rgba(233, 69, 96, 0.3);
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.confirmacion-ingreso-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.confirmacion-ingreso-cancelar,
+.confirmacion-ingreso-confirmar {
+    min-height: 2.75rem;
+    padding: 0.7rem 1rem;
+    border-radius: 12px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.confirmacion-ingreso-cancelar {
+    color: #eaeaea;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.confirmacion-ingreso-cancelar:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.confirmacion-ingreso-confirmar {
+    color: #fff;
+    background: #d83c56;
+    border: 1px solid #e94560;
+}
+
+.confirmacion-ingreso-confirmar:hover:not(:disabled) {
+    background: #c7334d;
+    transform: translateY(-1px);
+}
+
+.confirmacion-ingreso-cancelar:disabled,
+.confirmacion-ingreso-confirmar:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+@keyframes confirmacion-ingreso-entrada {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 @media (max-width: 900px) {
     .ingresos-filtros {
         grid-template-columns: 1fr 1fr;
@@ -384,5 +558,22 @@
 
     .ingreso-monto {
         align-self: flex-end;
+    }
+
+    .btn-eliminar-ingreso {
+        align-self: flex-end;
+    }
+
+    .confirmacion-ingreso-modal {
+        padding: 1.5rem;
+    }
+
+    .confirmacion-ingreso-acciones {
+        flex-direction: column-reverse;
+    }
+
+    .confirmacion-ingreso-cancelar,
+    .confirmacion-ingreso-confirmar {
+        width: 100%;
     }
 }

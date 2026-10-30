@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Icon from '../../components/Icon';
 import { useIngresosViewModel } from '../../viewmodels/useIngresosViewModel';
@@ -25,6 +26,8 @@ const formatDateLabel = (dateString) => {
 };
 
 const IngresosList = () => {
+    const [ingresoPorEliminar, setIngresoPorEliminar] = useState(null);
+    const cancelarEliminacionRef = useRef(null);
     const {
         ingresos,
         ingresosFiltrados,
@@ -38,10 +41,35 @@ const IngresosList = () => {
         setFechaDesde,
         fechaHasta,
         setFechaHasta,
+        eliminandoId,
         hayFiltrosActivos,
         limpiarFiltros,
+        eliminarIngreso,
         fetchIngresos
     } = useIngresosViewModel();
+
+    useEffect(() => {
+        if (!ingresoPorEliminar) return undefined;
+
+        cancelarEliminacionRef.current?.focus();
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape' && eliminandoId === null) {
+                setIngresoPorEliminar(null);
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [ingresoPorEliminar, eliminandoId]);
+
+    const confirmarEliminacion = async () => {
+        if (!ingresoPorEliminar || eliminandoId !== null) return;
+
+        const eliminado = await eliminarIngreso(ingresoPorEliminar.clave);
+        if (eliminado) {
+            setIngresoPorEliminar(null);
+        }
+    };
 
     if (loading && ingresos.length === 0) {
         return (
@@ -63,7 +91,7 @@ const IngresosList = () => {
                 </Link>
             </div>
 
-            {error && (
+            {error && !ingresoPorEliminar && (
                 <div className="error-message" role="alert">
                     <span>{error}</span>
                     <button type="button" onClick={fetchIngresos} className="btn-reintentar">
@@ -212,9 +240,76 @@ const IngresosList = () => {
                                 <div className="ingreso-monto">
                                     +{formatCurrency(ingreso.monto)}
                                 </div>
+                                <button
+                                    type="button"
+                                    className="btn-eliminar-ingreso"
+                                    onClick={() => setIngresoPorEliminar(ingreso)}
+                                    disabled={eliminandoId === ingreso.clave}
+                                    aria-label={`Eliminar ingreso ${ingreso.descripcion || ingreso.clave}`}
+                                >
+                                    {eliminandoId === ingreso.clave ? 'Eliminando...' : 'Eliminar'}
+                                </button>
                             </article>
                         );
                     })}
+                </div>
+            )}
+
+            {ingresoPorEliminar && (
+                <div
+                    className="confirmacion-ingreso-overlay"
+                    role="presentation"
+                    onClick={() => eliminandoId === null && setIngresoPorEliminar(null)}
+                >
+                    <section
+                        className="confirmacion-ingreso-modal"
+                        role="alertdialog"
+                        aria-modal="true"
+                        aria-labelledby="confirmacion-ingreso-titulo"
+                        aria-describedby="confirmacion-ingreso-descripcion"
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        <div className="confirmacion-ingreso-icono" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 7h16M10 11v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3" />
+                            </svg>
+                        </div>
+                        <h2 id="confirmacion-ingreso-titulo">¿Eliminar este ingreso?</h2>
+                        <p id="confirmacion-ingreso-descripcion">
+                            Esta acción es permanente. El ingreso se eliminará de tu historial.
+                        </p>
+                        <div className="confirmacion-ingreso-detalle">
+                            <span className="confirmacion-ingreso-nombre">
+                                {ingresoPorEliminar.descripcion?.trim() || 'Sin descripción'}
+                            </span>
+                            <span className="confirmacion-ingreso-monto">
+                                {formatCurrency(ingresoPorEliminar.monto)}
+                            </span>
+                            <span className="confirmacion-ingreso-fecha">
+                                {formatDateLabel(ingresoPorEliminar.fecha)}
+                            </span>
+                        </div>
+                        {error && <div className="confirmacion-ingreso-error" role="alert">{error}</div>}
+                        <div className="confirmacion-ingreso-acciones">
+                            <button
+                                ref={cancelarEliminacionRef}
+                                type="button"
+                                className="confirmacion-ingreso-cancelar"
+                                onClick={() => setIngresoPorEliminar(null)}
+                                disabled={eliminandoId !== null}
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                type="button"
+                                className="confirmacion-ingreso-confirmar"
+                                onClick={confirmarEliminacion}
+                                disabled={eliminandoId !== null}
+                            >
+                                {eliminandoId !== null ? 'Eliminando...' : 'Sí, eliminar'}
+                            </button>
+                        </div>
+                    </section>
                 </div>
             )}
         </div>

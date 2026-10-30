@@ -116,8 +116,37 @@ const obtenerIngresoPorId = async (req, res) => {
 	}
 };
 
+const eliminarIngreso = async (req, res) => {
+	try {
+		const clave = Number(req.params?.id);
+		const ahorradorId = req.user.id;
+
+		if (!Number.isInteger(clave) || clave <= 0) {
+			return res.status(400).json({ error: 'Identificador de ingreso inválido' });
+		}
+
+		const ingreso = await models.Ingreso.findByPk(clave);
+
+		if (!ingreso) {
+			return res.status(404).json({ error: 'Ingreso no encontrado' });
+		}
+
+		if (ingreso.ahorradorId !== ahorradorId) {
+			return res.status(403).json({ error: 'No tiene permiso para eliminar este ingreso' });
+		}
+
+		await ingreso.destroy();
+
+		return res.json({ message: 'Ingreso eliminado correctamente' });
+	} catch (error) {
+		console.error('Error al eliminar ingreso:', error);
+		return res.status(500).json({ error: 'Error interno del servidor' });
+	}
+};
+
 module.exports = {
 	crearIngreso,
 	obtenerIngresos,
-	obtenerIngresoPorId
+	obtenerIngresoPorId,
+	eliminarIngreso
 };
