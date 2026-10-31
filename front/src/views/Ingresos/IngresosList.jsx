@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Icon from '../../components/Icon';
 import { useIngresosViewModel } from '../../viewmodels/useIngresosViewModel';
 import './IngresosList.css';
@@ -27,6 +27,9 @@ const formatDateLabel = (dateString) => {
 
 const IngresosList = () => {
     const [ingresoPorEliminar, setIngresoPorEliminar] = useState(null);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [ingresoCreado, setIngresoCreado] = useState(() => Boolean(location.state?.ingresoCreado));
     const cancelarEliminacionRef = useRef(null);
     const {
         ingresos,
@@ -47,6 +50,19 @@ const IngresosList = () => {
         eliminarIngreso,
         fetchIngresos
     } = useIngresosViewModel();
+
+    useEffect(() => {
+        if (location.state?.ingresoCreado) {
+            navigate(location.pathname, { replace: true, state: null });
+        }
+    }, [location.pathname, location.state, navigate]);
+
+    useEffect(() => {
+        if (!ingresoCreado || loading) return undefined;
+
+        const timeoutId = window.setTimeout(() => setIngresoCreado(false), 3500);
+        return () => window.clearTimeout(timeoutId);
+    }, [ingresoCreado, loading]);
 
     useEffect(() => {
         if (!ingresoPorEliminar) return undefined;
@@ -90,6 +106,12 @@ const IngresosList = () => {
                     Nuevo Ingreso
                 </Link>
             </div>
+
+            {ingresoCreado && (
+                <div className="ingreso-success-message" role="status">
+                    Ingreso registrado correctamente.
+                </div>
+            )}
 
             {error && !ingresoPorEliminar && (
                 <div className="error-message" role="alert">
