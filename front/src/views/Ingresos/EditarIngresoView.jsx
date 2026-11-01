@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { actualizarIngreso, obtenerIngresoPorId } from '../../services/ingresoService';
-import './Ingresos.css';
+import './FormIngreso.css';
 
 const EditarIngresoView = () => {
     const { id } = useParams();
@@ -67,59 +67,67 @@ const EditarIngresoView = () => {
     };
 
     if (loading) {
-        return <p className="ingresos-message" role="status">Cargando ingreso...</p>;
+        return <div className="form-container"><p className="loading">Cargando ingreso...</p></div>;
     }
 
     return (
-        <section className="ingresos-container ingreso-form-container">
+        <div className="form-container">
             <h1>Editar ingreso</h1>
-            <form className="ingreso-form" onSubmit={handleSubmit}>
-                <label htmlFor="monto">Monto *</label>
-                <input
-                    id="monto"
-                    name="monto"
-                    type="number"
-                    min="0.01"
-                    step="0.01"
-                    value={formData.monto}
-                    onChange={handleChange}
-                    required
-                    disabled={saving}
-                />
-
-                <label htmlFor="fecha">Fecha *</label>
-                <input
-                    id="fecha"
-                    name="fecha"
-                    type="date"
-                    value={formData.fecha}
-                    onChange={handleChange}
-                    required
-                    disabled={saving}
-                />
-
-                <label htmlFor="descripcion">Descripción (opcional)</label>
-                <textarea
-                    id="descripcion"
-                    name="descripcion"
-                    rows={4}
-                    value={formData.descripcion}
-                    onChange={handleChange}
-                    disabled={saving}
-                />
-
-                {error && <div className="ingresos-error" role="alert">{error}</div>}
-
-                <div className="ingreso-form-actions">
-                    <button type="button" className="ingreso-cancel-button" onClick={() => navigate('/ingresos')} disabled={saving}>
-                        Cancelar
-                    </button>
-                    <button type="submit" className="ingreso-save-button" disabled={saving}>
-                        {saving ? 'Guardando...' : 'Guardar cambios'}
-                    </button>
+            {error && !formData.monto ? (
+                <div className="form-error" role="alert">
+                    {error} <Link to="/ingresos">Volver a ingresos</Link>
                 </div>
-            </form>
-        </section>
+            ) : (
+                <form onSubmit={handleSubmit} className="form-meta" noValidate>
+                    <div className="form-group">
+                        <label htmlFor="monto">Monto *</label>
+                        <input
+                            id="monto"
+                            name="monto"
+                            type="number"
+                            min="0.01"
+                            step="0.01"
+                            value={formData.monto}
+                            onChange={handleChange}
+                            required
+                            disabled={saving}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="fecha">Fecha *</label>
+                        <input
+                            id="fecha"
+                            name="fecha"
+                            type="date"
+                            value={formData.fecha}
+                            onChange={handleChange}
+                            required
+                            disabled={saving}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="descripcion">Descripción (opcional)</label>
+                        <textarea
+                            id="descripcion"
+                            name="descripcion"
+                            value={formData.descripcion}
+                            onChange={handleChange}
+                            rows={3}
+                            disabled={saving}
+                        />
+                    </div>
+                    {error && <div className="form-error" role="alert">{error}</div>}
+                    <div className="form-actions">
+                        <button type="button" className="btn-cancelar" onClick={() => navigate('/ingresos')} disabled={saving}>
+                            Cancelar
+                        </button>
+                        <button type="submit" className="btn-enviar" disabled={saving}>
+                            {saving ? 'Guardando...' : 'Guardar cambios'}
+                        </button>
+                    </div>
+                </form>
+            )}
+        </div>
     );
 };
 
