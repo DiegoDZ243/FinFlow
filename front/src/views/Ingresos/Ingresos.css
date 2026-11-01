@@ -1,0 +1,176 @@
+.ingresos-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+.ingresos-header {
+    margin-bottom: 1.5rem;
+}
+
+.ingresos-header h1,
+.ingreso-form-container h1 {
+    color: #eaeaea;
+    margin-bottom: 0.4rem;
+}
+
+.ingresos-header p,
+.ingreso-card-info p {
+    color: #a4a8b8;
+}
+
+.ingresos-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.ingreso-card,
+.ingresos-empty,
+.ingreso-form {
+    background: rgba(26, 26, 46, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 1.5rem;
+}
+
+.ingreso-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.ingreso-card-info {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.ingreso-card-info strong {
+    color: #16c79a;
+    font-size: 1.25rem;
+}
+
+.ingreso-card-info span {
+    color: #cfd6e6;
+}
+
+.ingreso-card-info p {
+    overflow-wrap: anywhere;
+}
+
+.ingreso-edit-link,
+.ingreso-save-button,
+.ingreso-cancel-button,
+.ingresos-error button {
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    font-weight: 700;
+}
+
+.ingreso-edit-link,
+.ingreso-save-button {
+    background: #16c79a;
+    color: #0f0f1a;
+}
+
+.ingreso-edit-link:hover,
+.ingreso-save-button:hover {
+    background: #20d39a;
+    color: #0f0f1a;
+}
+
+.ingresos-empty {
+    text-align: center;
+    padding: 3rem 1.5rem;
+}
+
+.ingresos-empty h2 {
+    margin-bottom: 0.5rem;
+    color: #eaeaea;
+}
+
+.ingresos-empty p,
+.ingresos-message {
+    color: #a4a8b8;
+}
+
+.ingresos-message {
+    padding: 2rem 0;
+}
+
+.ingresos-error {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid rgba(233, 69, 96, 0.3);
+    border-radius: 14px;
+    color: #e94560;
+    background: rgba(233, 69, 96, 0.14);
+}
+
+.ingresos-error button {
+    border: 0;
+    color: white;
+    background: #c7334d;
+}
+
+.ingreso-form-container {
+    max-width: 700px;
+}
+
+.ingreso-form-container h1 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.ingreso-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #cfd6e6;
+}
+
+.ingreso-form input,
+.ingreso-form textarea {
+    margin-bottom: 1.25rem;
+}
+
+.ingreso-form textarea {
+    resize: vertical;
+}
+
+.ingreso-form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.ingreso-form-actions button {
+    flex: 1;
+    border: 0;
+    cursor: pointer;
+}
+
+.ingreso-cancel-button {
+    color: #eaeaea;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.ingreso-save-button:disabled,
+.ingreso-cancel-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+@media (max-width: 560px) {
+    .ingreso-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .ingreso-form-actions {
+        flex-direction: column-reverse;
+    }
+}
