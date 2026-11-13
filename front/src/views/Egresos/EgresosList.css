@@ -1,0 +1,115 @@
+.egresos-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+.egresos-header {
+    margin-bottom: 1.5rem;
+}
+
+.egresos-header h1 {
+    margin-bottom: 0.4rem;
+    color: #eaeaea;
+}
+
+.egresos-header p,
+.egreso-card-info p {
+    color: #a4a8b8;
+}
+
+.egresos-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.egreso-card,
+.egresos-empty {
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    background: rgba(26, 26, 46, 0.96);
+}
+
+.egreso-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.egreso-card-info {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.egreso-card-info strong {
+    color: #e94560;
+    font-size: 1.25rem;
+}
+
+.egreso-card-info span {
+    color: #cfd6e6;
+}
+
+.egreso-card-info p {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.egreso-edit-link {
+    padding: 0.7rem 1rem;
+    border-radius: 12px;
+    background: #e94560;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.egreso-edit-link:hover {
+    background: #c7334d;
+    color: #fff;
+}
+
+.egresos-empty {
+    text-align: center;
+}
+
+.egresos-empty h2 {
+    margin-bottom: 0.5rem;
+    color: #eaeaea;
+}
+
+.egresos-empty p,
+.egresos-message {
+    color: #a4a8b8;
+}
+
+.egresos-error {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid rgba(233, 69, 96, 0.3);
+    border-radius: 14px;
+    color: #e94560;
+    background: rgba(233, 69, 96, 0.14);
+}
+
+.egresos-error button {
+    padding: 0.7rem 1rem;
+    border: 0;
+    border-radius: 12px;
+    background: #c7334d;
+    color: #fff;
+    font-weight: 700;
+}
+
+@media (max-width: 560px) {
+    .egreso-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

@@ -9,6 +9,8 @@ import EditarMetaView from './views/Metas/EditarMetaView';
 import IngresosList from './views/Ingresos/IngresosList';
 import EditarIngresoView from './views/Ingresos/EditarIngresoView';
 import RegistroIngreso from './views/Ingresos/RegistroIngreso';
+import EgresosList from './views/Egresos/EgresosList';
+import EditarEgresoView from './views/Egresos/EditarEgresoView';
 
 const ProtectedRoute = ({ children }) => {
     const { isAuthenticated, loading } = useAuth();
@@ -52,6 +54,8 @@ function App() {
                     <Route path="ingresos" element={<IngresosList />} />
                     <Route path="ingresos/:id/editar" element={<EditarIngresoView />} />
                     <Route path="ingresos/nuevo" element={<RegistroIngreso />} />
+                    <Route path="egresos" element={<EgresosList />} />
+                    <Route path="egresos/:id/editar" element={<EditarEgresoView />} />
                 </Route>
             </Routes>
         </BrowserRouter>
