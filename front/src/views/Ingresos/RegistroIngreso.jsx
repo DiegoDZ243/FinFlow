@@ -18,19 +18,16 @@ const RegistroIngreso = () => {
 	});
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
-	const [success, setSuccess] = useState('');
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setFormData((previous) => ({ ...previous, [name]: value }));
 		setError('');
-		setSuccess('');
 	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		setError('');
-		setSuccess('');
 
 		const monto = Number(formData.monto);
 		if (!formData.monto || !Number.isFinite(monto) || monto <= 0) {
@@ -49,12 +46,7 @@ const RegistroIngreso = () => {
 				fecha: formData.fecha,
 				descripcion: formData.descripcion.trim() || null,
 			});
-			setSuccess('Ingreso registrado correctamente.');
-			setFormData({
-				monto: '',
-				fecha: obtenerFechaLocal(),
-				descripcion: '',
-			});
+			navigate('/ingresos', { state: { ingresoCreado: true } });
 		} catch (requestError) {
 			setError(requestError.response?.data?.error || 'No se pudo registrar el ingreso.');
 		} finally {
@@ -105,7 +97,6 @@ const RegistroIngreso = () => {
 				</div>
 
 				{error && <div className="form-error" role="alert">{error}</div>}
-				{success && <div className="form-success" role="status">{success}</div>}
 
 				<div className="form-actions">
 					<button type="button" className="btn-cancelar" onClick={() => navigate('/ingresos')}>

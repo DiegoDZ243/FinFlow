@@ -28,3 +28,8 @@ export const actualizarIngreso = async (id, data) => {
 	const response = await api.put(`/ingresos/${id}`, data, config());
 	return response.data;
 };
+  
+export const eliminarIngreso = async (id) => {
+	const response = await api.delete(`/ingresos/${id}`, config());
+	return response.data;
+};
