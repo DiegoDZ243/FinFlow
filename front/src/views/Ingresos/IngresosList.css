@@ -371,6 +371,22 @@
     white-space: nowrap;
 }
 
+.btn-editar-ingreso {
+    padding: 0.65rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    color: #eaeaea;
+    background: rgba(255, 255, 255, 0.06);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.btn-editar-ingreso:hover {
+    color: #16c79a;
+    border-color: rgba(22, 199, 154, 0.4);
+    background: rgba(22, 199, 154, 0.1);
+}
+
 .btn-eliminar-ingreso {
     background: rgba(233, 69, 96, 0.14);
     color: #ff8294;
@@ -577,6 +593,7 @@
         align-self: flex-end;
     }
 
+    .btn-editar-ingreso,
     .btn-eliminar-ingreso {
         align-self: flex-end;
     }

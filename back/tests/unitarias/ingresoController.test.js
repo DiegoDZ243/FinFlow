@@ -15,6 +15,7 @@ const {
     crearIngreso,
     obtenerIngresos,
     obtenerIngresoPorId,
+    actualizarIngreso,
     eliminarIngreso,
 } = require('../../controllers/ingresoController');
 const { models } = require('../../models');
@@ -245,6 +246,67 @@ describe('obtenerIngresoPorId', () => {
 
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ error: 'Error interno del servidor' });
+    });
+});
+
+describe('actualizarIngreso', () => {
+    test('actualiza campos permitidos de un ingreso propio', async () => {
+        const ingreso = {
+            clave: 5,
+            monto: '1500.00',
+            fecha: '2026-10-28',
+            descripcion: 'Pago',
+            ahorradorId: 17,
+            update: jest.fn().mockResolvedValue(undefined),
+        };
+        const req = {
+            params: { id: '5' },
+            user: { id: 17 },
+            body: { monto: '1750.50', fecha: '2026-10-29', descripcion: 'Pago actualizado', ahorradorId: 99 },
+        };
+        const res = makeRes();
+        models.Ingreso.findByPk.mockResolvedValue(ingreso);
+
+        await actualizarIngreso(req, res);
+
+        expect(ingreso.update).toHaveBeenCalledWith({
+            monto: 1750.5,
+            fecha: '2026-10-29',
+            descripcion: 'Pago actualizado',
+        });
+        expect(res.json).toHaveBeenCalledWith(ingreso);
+    });
+
+    test.each(['abc', '0', '-2'])('rechaza un id inválido: %s', async (id) => {
+        const req = { params: { id }, user: { id: 17 }, body: { monto: 200 } };
+        const res = makeRes();
+
+        await actualizarIngreso(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(models.Ingreso.findByPk).not.toHaveBeenCalled();
+    });
+
+    test('rechaza una actualización de otro usuario', async () => {
+        const req = { params: { id: '5' }, user: { id: 17 }, body: { monto: 200 } };
+        const res = makeRes();
+        models.Ingreso.findByPk.mockResolvedValue({ clave: 5, ahorradorId: 99 });
+
+        await actualizarIngreso(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(403);
+    });
+
+    test('rechaza datos inválidos y no actualiza el ingreso', async () => {
+        const ingreso = { clave: 5, ahorradorId: 17, update: jest.fn() };
+        const req = { params: { id: '5' }, user: { id: 17 }, body: { monto: -1 } };
+        const res = makeRes();
+        models.Ingreso.findByPk.mockResolvedValue(ingreso);
+
+        await actualizarIngreso(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(ingreso.update).not.toHaveBeenCalled();
     });
 });
 

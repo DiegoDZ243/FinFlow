@@ -262,15 +262,25 @@ const IngresosList = () => {
                                 <div className="ingreso-monto">
                                     +{formatCurrency(ingreso.monto)}
                                 </div>
-                                <button
-                                    type="button"
-                                    className="btn-eliminar-ingreso"
-                                    onClick={() => setIngresoPorEliminar(ingreso)}
-                                    disabled={eliminandoId === ingreso.clave}
-                                    aria-label={`Eliminar ingreso ${ingreso.descripcion || ingreso.clave}`}
-                                >
-                                    {eliminandoId === ingreso.clave ? 'Eliminando...' : 'Eliminar'}
-                                </button>
+                                
+                                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                                    <Link
+                                        to={`/ingresos/${ingreso.clave}/editar`}
+                                        className="btn-editar-ingreso"
+                                        aria-label={`Editar ingreso ${formatCurrency(ingreso.monto)}`}
+                                    >
+                                        Editar
+                                    </Link>
+                                    <button
+                                        type="button"
+                                        className="btn-eliminar-ingreso"
+                                        onClick={() => setIngresoPorEliminar(ingreso)}
+                                        disabled={eliminandoId === ingreso.clave}
+                                        aria-label={`Eliminar ingreso ${ingreso.descripcion || ingreso.clave}`}
+                                    >
+                                        {eliminandoId === ingreso.clave ? 'Eliminando...' : 'Eliminar'}
+                                    </button>
+                                </div>
                             </article>
                         );
                     })}

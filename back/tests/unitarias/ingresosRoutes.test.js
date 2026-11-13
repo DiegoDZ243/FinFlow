@@ -75,12 +75,38 @@ describe('Rutas /api/ingresos', () => {
         expect(res.body).toEqual(ingreso);
     });
 
+   test('PUT /api/ingresos/:id actualiza un ingreso propio autenticado', async () => {
+        const ingreso = {
+            clave: 3,
+            monto: '2400.00',
+            fecha: '2026-10-28',
+            descripcion: 'Salario',
+            ahorradorId: 17,
+            update: jest.fn().mockResolvedValue(undefined),
+        };
+        
+        models.Ingreso.findByPk.mockResolvedValue(ingreso);
+
+        const res = await request(app)
+            .put('/api/ingresos/3')
+            .set('Authorization', `Bearer ${generarToken()}`)
+            .send({ monto: 2800, fecha: '2026-10-30', descripcion: 'Salario actualizado' });
+
+        expect(res.status).toBe(200);
+        expect(ingreso.update).toHaveBeenCalledWith({
+            monto: 2800,
+            fecha: '2026-10-30',
+            descripcion: 'Salario actualizado',
+        });
+    });
+
     test('DELETE /api/ingresos/:id elimina el ingreso con un token válido', async () => {
         const ingreso = {
             clave: 3,
             ahorradorId: 17,
             destroy: jest.fn().mockResolvedValue(undefined),
         };
+        
         models.Ingreso.findByPk.mockResolvedValue(ingreso);
 
         const res = await request(app)
