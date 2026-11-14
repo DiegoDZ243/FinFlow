@@ -81,15 +81,23 @@ const EgresosList = () => {
 									</div>
 								</div>
 								<strong className="egreso-monto">-{formatCurrency(egreso.monto)}</strong>
-								<button
-									type="button"
-									className="btn-eliminar-egreso"
-									onClick={() => handleDelete(egreso)}
-									disabled={eliminandoId !== null}
-									aria-label={`Eliminar egreso ${egreso.descripcion || egreso.clave}`}
-								>
-									{eliminandoId === egreso.clave ? 'Eliminando...' : 'Eliminar'}
-								</button>
+								<div className="egreso-acciones">
+									<Link
+										to={`/egresos/${egreso.clave}/editar`}
+										className="btn-editar-egreso"
+									>
+										Editar
+									</Link>
+									<button
+										type="button"
+										className="btn-eliminar-egreso"
+										onClick={() => handleDelete(egreso)}
+										disabled={eliminandoId !== null}
+										aria-label={`Eliminar egreso ${egreso.descripcion || egreso.clave}`}
+									>
+										{eliminandoId === egreso.clave ? 'Eliminando...' : 'Eliminar'}
+									</button>
+								</div>
 							</article>
 						);
 					})}

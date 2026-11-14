@@ -1,10 +1,10 @@
-import api from '../config/axios';
+﻿import api from '../config/axios';
 
 const getToken = () => localStorage.getItem('token');
 
 const config = () => ({
     headers: {
-        Authorization: `Bearer ${getToken()}`
+        Authorization: getToken() ? `Bearer ${getToken()}` : ''
     }
 });
 

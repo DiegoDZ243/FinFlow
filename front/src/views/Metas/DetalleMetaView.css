@@ -287,11 +287,6 @@
     transform: translateY(-1px);
 }
 
-    background-color: #2a2a4a;
-    color: #eaeaea;
-    border: 1px solid #3a3a5a;
-}
-
 .btn-confirmar {
     background-color: #16c79a;
     color: #0f0f1a;

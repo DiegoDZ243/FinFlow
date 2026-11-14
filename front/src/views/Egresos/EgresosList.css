@@ -167,6 +167,27 @@
 	white-space: nowrap;
 }
 
+.egreso-acciones {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+}
+
+.btn-editar-egreso {
+	padding: 0.7rem 1rem;
+	border: 1px solid rgba(22, 199, 154, 0.35);
+	border-radius: 12px;
+	background: rgba(22, 199, 154, 0.1);
+	color: #16c79a;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.btn-editar-egreso:hover {
+	background: rgba(22, 199, 154, 0.2);
+	color: #16c79a;
+}
+
 .btn-eliminar-egreso {
 	padding: 0.7rem 1rem;
 	border: 1px solid rgba(233, 69, 96, 0.4);
@@ -197,7 +218,12 @@
 		margin-left: auto;
 	}
 
-	.btn-eliminar-egreso {
+	.egreso-acciones {
 		width: 100%;
+	}
+
+	.egreso-acciones > * {
+		flex: 1;
+		text-align: center;
 	}
 }
