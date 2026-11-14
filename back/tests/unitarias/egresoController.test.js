@@ -118,8 +118,28 @@ describe('actualizarEgreso', () => {
         expect(res.json).toHaveBeenCalledWith(egreso);
     });
 
+    test('permite actualizar el monto máximo de 99,999,999.99', async () => {
+        const egreso = {
+            clave: 5,
+            ahorradorId: 17,
+            update: jest.fn().mockResolvedValue(undefined),
+        };
+        const res = makeRes();
+        models.Egreso.findByPk.mockResolvedValue(egreso);
+
+        await actualizarEgreso({
+            params: { id: '5' },
+            user: { id: 17 },
+            body: { monto: 99999999.99 },
+        }, res);
+
+        expect(egreso.update).toHaveBeenCalledWith({ monto: 99999999.99 });
+        expect(res.json).toHaveBeenCalledWith(egreso);
+    });
+
     test.each([
         [{ monto: -1 }, 'El monto debe ser mayor a 0'],
+        [{ monto: 100000000 }, 'El monto no puede ser mayor a 99,999,999.99'],
         [{ fecha: '2026-02-30' }, 'La fecha debe tener formato YYYY-MM-DD y ser válida'],
         [{ descripcion: 42 }, 'La descripción debe ser texto'],
         [{}, 'Proporciona al menos un campo para actualizar'],

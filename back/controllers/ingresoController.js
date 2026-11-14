@@ -1,6 +1,8 @@
 const { Op } = require('sequelize');
 const { models } = require('../models');
 
+const MAX_MONTO_INGRESO = 99999999.99;
+
 const fechaEsValida = (fecha) => {
     if (typeof fecha !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
         return false;
@@ -23,6 +25,9 @@ const crearIngreso = async (req, res) => {
 
         if (montoRecibido === undefined || montoRecibido === null || montoRecibido === '' || !Number.isFinite(monto) || monto <= 0) {
             return res.status(400).json({ error: 'El monto debe ser mayor a 0' });
+        }
+        if (monto > MAX_MONTO_INGRESO) {
+            return res.status(400).json({ error: 'El monto no puede ser mayor a 99,999,999.99' });
         }
 
         if (fecha !== undefined && !fechaEsValida(fecha)) {
@@ -134,6 +139,9 @@ const actualizarIngreso = async (req, res) => {
             const monto = Number(montoRecibido);
             if (montoRecibido === null || montoRecibido === '' || !Number.isFinite(monto) || monto <= 0) {
                 return res.status(400).json({ error: 'El monto debe ser mayor a 0' });
+            }
+            if (monto > MAX_MONTO_INGRESO) {
+                return res.status(400).json({ error: 'El monto no puede ser mayor a 99,999,999.99' });
             }
             cambios.monto = monto;
         }

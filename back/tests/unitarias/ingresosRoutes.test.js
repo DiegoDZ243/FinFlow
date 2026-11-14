@@ -38,6 +38,34 @@ describe('Rutas /api/ingresos', () => {
         expect(models.Ingreso.findAll).not.toHaveBeenCalled();
     });
 
+    test('POST /api/ingresos rechaza montos mayores a 99,999,999.99', async () => {
+        const res = await request(app)
+            .post('/api/ingresos')
+            .set('Authorization', `Bearer ${generarToken()}`)
+            .send({ monto: 100000000 });
+
+        expect(res.status).toBe(400);
+        expect(res.body).toEqual({ error: 'El monto no puede ser mayor a 99,999,999.99' });
+        expect(models.Ingreso.create).not.toHaveBeenCalled();
+    });
+
+    test('POST /api/ingresos permite el monto máximo de 99,999,999.99', async () => {
+        const ingreso = { clave: 5, monto: 99999999.99, ahorradorId: 17 };
+        models.Ingreso.create.mockResolvedValue(ingreso);
+
+        const res = await request(app)
+            .post('/api/ingresos')
+            .set('Authorization', `Bearer ${generarToken()}`)
+            .send({ monto: 99999999.99 });
+
+        expect(res.status).toBe(201);
+        expect(models.Ingreso.create).toHaveBeenCalledWith({
+            monto: 99999999.99,
+            descripcion: null,
+            ahorradorId: 17,
+        });
+    });
+
     test('DELETE /api/ingresos/:id rechaza peticiones sin token con 401', async () => {
         const res = await request(app).delete('/api/ingresos/3');
 

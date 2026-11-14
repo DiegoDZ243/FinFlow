@@ -76,6 +76,33 @@ describe('crearIngreso', () => {
         expect(models.Ingreso.create).not.toHaveBeenCalled();
     });
 
+    test('rechaza montos mayores a 99,999,999.99', async () => {
+        const req = makeReq({ monto: 100000000 });
+        const res = makeRes();
+
+        await crearIngreso(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: 'El monto no puede ser mayor a 99,999,999.99' });
+        expect(models.Ingreso.create).not.toHaveBeenCalled();
+    });
+
+    test('permite crear un ingreso por el monto máximo de 99,999,999.99', async () => {
+        const req = makeReq({ monto: 99999999.99 });
+        const res = makeRes();
+        models.Ingreso.create.mockResolvedValue({ clave: 1, monto: 99999999.99 });
+
+        await crearIngreso(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(201);
+        expect(models.Ingreso.create).toHaveBeenCalledWith({
+            monto: 99999999.99,
+            fecha: '2026-10-28',
+            descripcion: 'Pago mensual',
+            ahorradorId: 17,
+        });
+    });
+
     test('rechaza una fecha inválida', async () => {
         const req = makeReq({ fecha: '2026-02-30' });
         const res = makeRes();
@@ -275,6 +302,19 @@ describe('actualizarIngreso', () => {
             descripcion: 'Pago actualizado',
         });
         expect(res.json).toHaveBeenCalledWith(ingreso);
+    });
+
+    test('rechaza actualizar el ingreso a un monto mayor a 99,999,999.99', async () => {
+        const ingreso = { clave: 5, ahorradorId: 17, update: jest.fn() };
+        const req = { params: { id: '5' }, user: { id: 17 }, body: { monto: 100000000 } };
+        const res = makeRes();
+        models.Ingreso.findByPk.mockResolvedValue(ingreso);
+
+        await actualizarIngreso(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: 'El monto no puede ser mayor a 99,999,999.99' });
+        expect(ingreso.update).not.toHaveBeenCalled();
     });
 
     test.each(['abc', '0', '-2'])('rechaza un id inválido: %s', async (id) => {
