@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { actualizarEgreso, obtenerEgresoPorId } from '../../services/egresoService';
 import '../Ingresos/FormIngreso.css';
 
+const MAX_MONTO_EGRESO = 99999999.99;
+
 const EditarEgresoView = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -43,6 +45,10 @@ const EditarEgresoView = () => {
         const monto = Number(formData.monto);
         if (!Number.isFinite(monto) || monto <= 0) {
             setError('El monto debe ser mayor a 0.');
+            return;
+        }
+        if (monto > MAX_MONTO_EGRESO) {
+            setError('El monto no puede ser mayor a 99,999,999.99');
             return;
         }
         if (!formData.fecha || Number.isNaN(new Date(formData.fecha).getTime())) {
@@ -87,6 +93,7 @@ const EditarEgresoView = () => {
                             type="number"
                             min="0.01"
                             step="0.01"
+                            max={MAX_MONTO_EGRESO}
                             value={formData.monto}
                             onChange={handleChange}
                             required
