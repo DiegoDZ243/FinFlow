@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+﻿const { Op } = require('sequelize');
 const { models } = require('../models');
 
 const fechaEsValida = (fecha) => {
@@ -161,9 +161,33 @@ const actualizarIngreso = async (req, res) => {
     }
 };
 
+const eliminarIngreso = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!idEsValido(id)) {
+            return res.status(400).json({ error: 'Identificador de ingreso inválido' });
+        }
+
+        const ingreso = await models.Ingreso.findByPk(Number(id));
+        if (!ingreso) {
+            return res.status(404).json({ error: 'Ingreso no encontrado' });
+        }
+        if (ingreso.ahorradorId !== req.user.id) {
+            return res.status(403).json({ error: 'No tiene permiso para eliminar este ingreso' });
+        }
+
+        await ingreso.destroy();
+        return res.json({ message: 'Ingreso eliminado correctamente' });
+    } catch (error) {
+        console.error('Error al eliminar ingreso:', error);
+        return res.status(500).json({ error: 'Error interno del servidor' });
+    }
+};
+
 module.exports = {
     crearIngreso,
     obtenerIngresos,
     obtenerIngresoPorId,
-    actualizarIngreso
+    actualizarIngreso,
+    eliminarIngreso
 };

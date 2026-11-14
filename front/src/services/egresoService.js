@@ -1,8 +1,10 @@
-import api from '../config/axios';
+﻿import api from '../config/axios';
+
+const getToken = () => localStorage.getItem('token');
 
 const config = () => ({
     headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: getToken() ? `Bearer ${getToken()}` : ''
     }
 });
 
@@ -16,7 +18,17 @@ export const obtenerEgresoPorId = async (id) => {
     return response.data;
 };
 
+export const crearEgreso = async (data) => {
+    const response = await api.post('/egresos', data, config());
+    return response.data;
+};
+
 export const actualizarEgreso = async (id, data) => {
     const response = await api.put(`/egresos/${id}`, data, config());
+    return response.data;
+};
+
+export const eliminarEgreso = async (id) => {
+    const response = await api.delete(`/egresos/${id}`, config());
     return response.data;
 };

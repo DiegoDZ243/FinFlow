@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const { obtenerEgresoPorId } = require('../../controllers/egresoController');
 const { verificarToken } = require('../../middleware/auth');
 

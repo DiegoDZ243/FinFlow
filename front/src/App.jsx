@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+﻿import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Layout from './components/Layout';
 import LoginView from './views/Auth/LoginView';
@@ -7,36 +7,37 @@ import CrearMetaView from './views/Metas/CrearMetaView';
 import DetalleMetaView from './views/Metas/DetalleMetaView';
 import EditarMetaView from './views/Metas/EditarMetaView';
 import IngresosList from './views/Ingresos/IngresosList';
-import EditarIngresoView from './views/Ingresos/EditarIngresoView';
 import RegistroIngreso from './views/Ingresos/RegistroIngreso';
+import EditarIngresoView from './views/Ingresos/EditarIngresoView';
 import EgresosList from './views/Egresos/EgresosList';
+import RegistroEgreso from './views/Egresos/RegistroEgreso';
 import EditarEgresoView from './views/Egresos/EditarEgresoView';
 
 const ProtectedRoute = ({ children }) => {
     const { isAuthenticated, loading } = useAuth();
-    
+
     if (loading) {
         return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#0f0f1a', color: '#eaeaea' }}>Cargando...</div>;
     }
-    
+
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
     }
-    
+
     return children;
 };
 
 const LoginRoute = ({ children }) => {
     const { isAuthenticated, loading } = useAuth();
-    
+
     if (loading) {
         return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#0f0f1a', color: '#eaeaea' }}>Cargando...</div>;
     }
-    
+
     if (isAuthenticated) {
         return <Navigate to="/metas" replace />;
     }
-    
+
     return children;
 };
 
@@ -52,9 +53,10 @@ function App() {
                     <Route path="metas/:id" element={<DetalleMetaView />} />
                     <Route path="metas/:id/editar" element={<EditarMetaView />} />
                     <Route path="ingresos" element={<IngresosList />} />
-                    <Route path="ingresos/:id/editar" element={<EditarIngresoView />} />
                     <Route path="ingresos/nuevo" element={<RegistroIngreso />} />
+                    <Route path="ingresos/:id/editar" element={<EditarIngresoView />} />
                     <Route path="egresos" element={<EgresosList />} />
+                    <Route path="egresos/nuevo" element={<RegistroEgreso />} />
                     <Route path="egresos/:id/editar" element={<EditarEgresoView />} />
                 </Route>
             </Routes>
