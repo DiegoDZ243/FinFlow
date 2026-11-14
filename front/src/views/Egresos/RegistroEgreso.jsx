@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { crearEgreso } from '../../services/egresoService';
 import '../Ingresos/FormIngreso.css';
 
+const MAX_MONTO_EGRESO = 99999999.99;
+
 const obtenerFechaLocal = () => {
 	const ahora = new Date();
 	ahora.setMinutes(ahora.getMinutes() - ahora.getTimezoneOffset());
@@ -18,23 +20,24 @@ const RegistroEgreso = () => {
 	});
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
-	const [success, setSuccess] = useState('');
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setFormData((previous) => ({ ...previous, [name]: value }));
 		setError('');
-		setSuccess('');
 	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		setError('');
-		setSuccess('');
 
 		const monto = Number(formData.monto);
 		if (!formData.monto || !Number.isFinite(monto) || monto <= 0) {
 			setError('El monto debe ser mayor a 0.');
+			return;
+		}
+		if (monto > MAX_MONTO_EGRESO) {
+			setError('El monto no puede ser mayor a 99,999,999.99');
 			return;
 		}
 		if (!formData.fecha) {
@@ -49,12 +52,7 @@ const RegistroEgreso = () => {
 				fecha: formData.fecha,
 				descripcion: formData.descripcion.trim() || null,
 			});
-			setSuccess('Egreso registrado correctamente.');
-			setFormData({
-				monto: '',
-				fecha: obtenerFechaLocal(),
-				descripcion: '',
-			});
+			navigate('/egresos', { state: { egresoCreado: true } });
 		} catch (requestError) {
 			setError(requestError.response?.data?.error || 'No se pudo registrar el egreso.');
 		} finally {
@@ -77,6 +75,7 @@ const RegistroEgreso = () => {
 						onChange={handleChange}
 						min="0.01"
 						step="0.01"
+						max={MAX_MONTO_EGRESO}
 						required
 					/>
 				</div>
@@ -105,7 +104,6 @@ const RegistroEgreso = () => {
 				</div>
 
 				{error && <div className="form-error" role="alert">{error}</div>}
-				{success && <div className="form-success" role="status">{success}</div>}
 
 				<div className="form-actions">
 					<button type="button" className="btn-cancelar" onClick={() => navigate('/egresos')}>

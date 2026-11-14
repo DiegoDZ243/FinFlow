@@ -72,6 +72,34 @@ describe('Rutas /api/egresos', () => {
         expect(models.Egreso.create).not.toHaveBeenCalled();
     });
 
+    test('POST /api/egresos rechaza montos mayores a 99,999,999.99', async () => {
+        const res = await request(app)
+            .post('/api/egresos')
+            .set('Authorization', `Bearer ${generarToken()}`)
+            .send({ monto: 100000000 });
+
+        expect(res.status).toBe(400);
+        expect(res.body).toEqual({ error: 'El monto no puede ser mayor a 99,999,999.99' });
+        expect(models.Egreso.create).not.toHaveBeenCalled();
+    });
+
+    test('POST /api/egresos permite el monto máximo de 99,999,999.99', async () => {
+        const egreso = { clave: 5, monto: 99999999.99, ahorradorId: 17 };
+        models.Egreso.create.mockResolvedValue(egreso);
+
+        const res = await request(app)
+            .post('/api/egresos')
+            .set('Authorization', `Bearer ${generarToken()}`)
+            .send({ monto: 99999999.99 });
+
+        expect(res.status).toBe(201);
+        expect(models.Egreso.create).toHaveBeenCalledWith({
+            monto: 99999999.99,
+            descripcion: null,
+            ahorradorId: 17,
+        });
+    });
+
     test('POST /api/egresos requiere autenticación', async () => {
         const res = await request(app)
             .post('/api/egresos')

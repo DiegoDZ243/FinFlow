@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { crearIngreso } from '../../services/ingresoService';
 import './FormIngreso.css';
 
+const MAX_MONTO_INGRESO = 99999999.99;
+
 const obtenerFechaLocal = () => {
 	const ahora = new Date();
 	ahora.setMinutes(ahora.getMinutes() - ahora.getTimezoneOffset());
@@ -32,6 +34,10 @@ const RegistroIngreso = () => {
 		const monto = Number(formData.monto);
 		if (!formData.monto || !Number.isFinite(monto) || monto <= 0) {
 			setError('El monto debe ser mayor a 0.');
+			return;
+		}
+		if (monto > MAX_MONTO_INGRESO) {
+			setError('El monto no puede ser mayor a 99,999,999.99');
 			return;
 		}
 		if (!formData.fecha) {
@@ -69,6 +75,7 @@ const RegistroIngreso = () => {
 						onChange={handleChange}
 						min="0.01"
 						step="0.01"
+						max={MAX_MONTO_INGRESO}
 						required
 					/>
 				</div>
